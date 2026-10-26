@@ -1,0 +1,667 @@
+/* Jaeyoung Park: one-page site.
+   A sidebar holds the profile and an outline of the page; the outline marks the section being read.
+   IBM Plex Sans for text, IBM Plex Mono for the section titles and the email address,
+   one accent (blue-black ink), white page, same-size 3:2 figure panels. */
+
+:root {
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  /* section titles (About me, Publications, ...); set to var(--font-body) for Plex Sans titles */
+  --font-head: var(--font-mono);
+  --paper: #FFFFFF;
+  --ink: #18181B;
+  --ink-2: #4A4A52;
+  --ink-3: #6E6E78;
+  --accent: #1F4170;
+  --accent-line: rgba(31, 65, 112, 0.32);
+  --rule: #E4E6EA;
+  --panel: #F4F5F7;
+  --side: 15rem;
+  --col-gap: 4.5rem;
+  --main: 46rem;
+  --fig: 13.5rem;
+  --fig-gap: 1.75rem;
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: 2rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------- links ---------- */
+
+a {
+  color: var(--accent);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: var(--accent-line);
+  transition: text-decoration-color 120ms ease, color 120ms ease;
+}
+
+a:hover { text-decoration-color: currentColor; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---------- layout: sidebar + content ---------- */
+
+.layout {
+  display: grid;
+  grid-template-columns: var(--side) minmax(0, var(--main));
+  column-gap: var(--col-gap);
+  align-items: start;
+  max-width: calc(var(--side) + var(--col-gap) + var(--main) + 4rem);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ---------- sidebar ---------- */
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  padding: 4rem 0 2rem;
+}
+
+.portrait {
+  display: block;
+  width: 8.5rem;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.name {
+  margin: 1.25rem 0 0.35rem;
+  font-size: 1.5rem;
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.affil {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+/* email, profile icons and CV stack as one column of equal width */
+.contact {
+  display: inline-grid;
+  row-gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* email: an outlined button that opens a Gmail draft */
+.email-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.42rem 0.8rem;
+  border: 1.5px solid var(--accent);
+  border-radius: 8px;
+  background: #F4F7FB;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: background-color 120ms ease;
+}
+
+.email-pill:hover { background: #E7EEF7; }
+
+.email-pill svg,
+.cv-button svg {
+  flex: none;
+  width: 0.95rem;
+  height: 0.95rem;
+  fill: currentColor;
+}
+
+/* profile icons: Google Scholar, LinkedIn, GitHub, ORCID */
+.icon-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.45rem;
+}
+
+.icon-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.icon-links a:hover {
+  background: #E7EEF7;
+  color: var(--accent);
+}
+
+.icon-links svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: currentColor;
+}
+
+/* CV: the one filled button on the page */
+.cv-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #FFFFFF;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-decoration: none;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.14);
+  transition: background-color 120ms ease;
+}
+
+.cv-button:hover { background: #172F52; }
+
+/* the outline: a thin guide line, with the current section marked in the accent color */
+.outline { margin-top: 2.25rem; }
+
+.outline ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid var(--rule);
+}
+
+.outline a {
+  display: block;
+  margin-left: -1px;
+  padding: 0.4rem 0 0.4rem 1rem;
+  border-left: 2px solid transparent;
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  text-decoration: none;
+}
+
+.outline a:hover { color: var(--accent); }
+
+.outline a[aria-current="true"] {
+  color: var(--ink);
+  font-weight: 600;
+  border-left-color: var(--accent);
+}
+
+/* the narrow-screen version of the outline; hidden on wide screens */
+.outline-bar { display: none; }
+
+/* ---------- content ---------- */
+
+.content {
+  min-width: 0;
+  padding: 4rem 0 5rem;
+}
+
+section + section { margin-top: 4.5rem; }
+
+h2 {
+  margin: 0 0 1.75rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-head);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  word-spacing: -0.3em; /* a monospace space is a full letter wide; this closes up "About me" */
+}
+
+#about > p {
+  margin: 0 0 1rem;
+  max-width: 40rem;
+}
+
+h3.sub {
+  margin: 2.75rem 0 1.25rem;
+  font-size: 1.0625rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+h3.sub.first { margin-top: 0; }
+
+.lead {
+  margin: -0.6rem 0 1rem;
+  font-size: 0.9375rem;
+  color: var(--ink-2);
+}
+
+/* ---------- news: a compact list that scrolls inside a box about five lines tall ---------- */
+
+.news-box {
+  position: relative;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 0.55rem 0.4rem 0.55rem 0.95rem;
+}
+
+.news {
+  list-style: none;
+  margin: 0;
+  padding: 0 0.5rem 0 0;
+  max-height: 9.6rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  scrollbar-width: thin;
+  scrollbar-color: #C9CCD3 transparent;
+}
+
+.news:focus-visible { outline-offset: 4px; }
+
+.news li {
+  display: grid;
+  grid-template-columns: 4.25rem minmax(0, 1fr);
+  column-gap: 0.75rem;
+  padding: 0.18rem 0;
+}
+
+.news .date {
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* fade at the bottom while earlier items are hidden below */
+.news-box::after {
+  content: "";
+  position: absolute;
+  left: 1px;
+  right: 1rem;
+  bottom: 0.55rem;
+  height: 2.25rem;
+  background: linear-gradient(rgba(255, 255, 255, 0), var(--paper));
+  pointer-events: none;
+  transition: opacity 150ms ease;
+}
+
+.news-box.at-end::after { opacity: 0; }
+
+/* right-aligned to the edge of the news box (the intro's 40rem line length does not apply here) */
+#about .news-hint {
+  max-width: none;
+  margin: 0.45rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--ink-3);
+  text-align: right;
+}
+
+.news-hint.hidden { visibility: hidden; }
+
+/* ---------- figure and logo rows (publications, education) ---------- */
+
+.tile-row {
+  display: grid;
+  grid-template-columns: var(--fig) minmax(0, 1fr);
+  column-gap: var(--fig-gap);
+  align-items: start;
+}
+
+.tile-row + .tile-row { margin-top: 2.5rem; }
+
+.thumb {
+  display: block;
+  aspect-ratio: 3 / 2;
+  background: var(--panel);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 120ms ease;
+}
+
+a.thumb:hover { box-shadow: 0 0 0 2px var(--accent-line); }
+
+.thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.thumb.logo-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --logo lets a heavy logo be set a little smaller so all of them look the same size */
+.thumb.logo-tile img {
+  width: auto;
+  height: auto;
+  max-width: var(--logo, 80%);
+  max-height: var(--logo, 80%);
+}
+
+.meta {
+  margin: 0 0 0.3rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ink-3);
+}
+
+/* venue: a small tag above each paper title, grey while under review */
+.venue {
+  width: fit-content;
+  margin: 0 0 0.5rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 5px;
+  background: #E8EEF7;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.venue.pending {
+  background: var(--panel);
+  color: var(--ink-3);
+}
+
+/* schools: logo panels two-thirds the size of the paper figures */
+.school { --fig: 9rem; }
+
+.item-title {
+  margin: 0 0 0.4rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+.item-title a {
+  color: var(--ink);
+  text-decoration-color: transparent;
+}
+
+.item-title a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent-line);
+}
+
+.gist {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+.authors {
+  margin: 0 0 0.35rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--ink-3);
+}
+
+.authors .me {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* paper links: small outlined buttons, like the email box in the sidebar */
+.plinks {
+  list-style: none;
+  margin: 0.15rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.plinks a,
+.plinks .nolink {
+  display: block;
+  padding: 0.22rem 0.65rem;
+  border: 1px solid var(--accent-line);
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.plinks a:hover {
+  background: #E7EEF7;
+  border-color: var(--accent);
+}
+
+/* a link whose target is not out yet: grey, dashed */
+.nolink { color: var(--ink-3); }
+.plinks .nolink { border-style: dashed; border-color: #C9CCD3; }
+
+/* ---------- lists with dates on the right (education, service, teaching) ---------- */
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tile-row .list { margin-top: 0.8rem; }
+
+.list li + li { margin-top: 0.85rem; }
+
+.line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.line .what { font-weight: 500; }
+
+/* lines that describe rather than name a degree (Exchange program, High school) stay in regular weight */
+.list li.plain .what { font-weight: 400; }
+
+.line .when {
+  flex: none;
+  font-size: 0.9375rem;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.list .detail {
+  margin: 0.1rem 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.foot {
+  margin-top: 5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.875rem;
+  color: var(--ink-3);
+}
+
+/* ---------- narrower screens: profile on top, outline as a bar fixed to the top ---------- */
+
+@media (max-width: 64rem) {
+  html { scroll-padding-top: 3.75rem; }
+
+  .layout {
+    display: block;
+    max-width: calc(var(--main) + 2.5rem);
+    padding: 0 1.25rem;
+  }
+
+  .sidebar {
+    position: static;
+    height: auto;
+    overflow: visible;
+    padding: 2.25rem 0 0;
+    display: grid;
+    grid-template-columns: 6rem minmax(0, 1fr);
+    column-gap: 1.25rem;
+    align-items: center;
+  }
+
+  .portrait { width: 6rem; }
+  .name { margin-top: 0; }
+  .sidebar .outline { display: none; }
+
+  .outline-bar {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    margin: 1.75rem -1.25rem 0;
+    padding: 0 1.25rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .outline-bar ol {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1.4rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+
+  .outline-bar a {
+    display: block;
+    padding: 0.8rem 0 0.7rem;
+    border-bottom: 2px solid transparent;
+    color: var(--ink-2);
+    font-size: 0.9375rem;
+    text-decoration: none;
+  }
+
+  .outline-bar a[aria-current="true"] {
+    color: var(--ink);
+    font-weight: 600;
+    border-bottom-color: var(--accent);
+  }
+
+  .content { padding-top: 2.5rem; }
+}
+
+@media (max-width: 40rem) {
+  body { font-size: 1rem; }
+
+  .sidebar { grid-template-columns: 5rem minmax(0, 1fr); column-gap: 1rem; }
+  .outline-bar ol { gap: 0.95rem; }
+  .outline-bar a { font-size: 0.875rem; }
+
+  /* when the labels don't all fit, fade the side that hides more */
+  .outline-bar ol.more-right {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent);
+  }
+  .outline-bar ol.more-left {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 2.5rem);
+    mask-image: linear-gradient(to right, transparent, #000 2.5rem);
+  }
+  .outline-bar ol.more-left.more-right {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent);
+  }
+  .news { max-height: 12rem; }
+  .news li { grid-template-columns: 3.9rem minmax(0, 1fr); column-gap: 0.6rem; }
+  .portrait { width: 5rem; }
+  .name { font-size: 1.375rem; }
+
+  .tile-row { grid-template-columns: minmax(0, 1fr); }
+  .tile-row + .tile-row { margin-top: 2.5rem; }
+  .thumb { max-width: 24rem; margin-bottom: 1rem; }
+  .school .thumb { max-width: 9rem; }
+
+  /* papers: a small figure beside the venue and title, the rest full width below */
+  .tile-row.paper {
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    column-gap: 0.9rem;
+  }
+  .tile-row.paper .tile-text { display: contents; }
+  .tile-row.paper .thumb {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    max-width: none;
+    margin: 0;
+  }
+  .tile-row.paper .venue,
+  .tile-row.paper .item-title { grid-column: 2; }
+  .tile-row.paper .gist,
+  .tile-row.paper .authors,
+  .tile-row.paper .plinks { grid-column: 1 / -1; }
+  .tile-row.paper .gist { margin-top: 0.75rem; }
+
+  /* a little taller, easier to tap */
+  .plinks a,
+  .plinks .nolink { padding: 0.32rem 0.75rem; }
+
+  h2 { font-size: 1.3rem; }
+  section + section { margin-top: 3.5rem; }
+}
+
+/* narrow phones (about 360px wide): a slightly smaller figure leaves more room for the title */
+@media (max-width: 24rem) {
+  .tile-row.paper {
+    grid-template-columns: 7rem minmax(0, 1fr);
+    column-gap: 0.8rem;
+  }
+}
+
+@media print {
+  .outline, .outline-bar { display: none; }
+  .layout { display: block; max-width: none; padding: 0; }
+  .sidebar { position: static; height: auto; padding: 0; }
+  a { text-decoration: none; color: inherit; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a, .thumb { transition: none; }
+}

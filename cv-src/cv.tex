@@ -1,0 +1,100 @@
+% Jaeyoung Park: curriculum vitae.
+% Build with pdfLaTeX: latexmk -pdf cv.tex (or run pdflatex cv.tex).
+% The homepage's Download CV button opens files/cv.pdf: copy the built PDF there.
+% Source convention: one sentence or one entry per source line.
+
+\documentclass[11pt]{article}
+
+\usepackage[a4paper, margin=2.2cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\hypersetup{pdftitle={Jaeyoung Park: CV}, pdfauthor={Jaeyoung Park}, pdfsubject={Curriculum vitae}, pdfdisplaydoctitle=true}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+% No hyphenation: titles and venue names stay whole.
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+
+% Section titles: small caps over a full-width rule.
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\vspace{-0.5ex}\titlerule]
+\titlespacing*{\section}{0pt}{3.4ex}{1.4ex}
+\titleformat{\subsection}{\normalsize\bfseries\raggedright}{}{0em}{}
+\titlespacing*{\subsection}{0pt}{1.2ex}{0.6ex}
+
+% Indented list under a heading line (degrees, courses).
+\newlist{sublist}{itemize}{1}
+\setlist[sublist]{label=\textbullet, leftmargin=1.6em, itemsep=0.4ex, topsep=0.4ex, parsep=0pt}
+
+% Publications: bracketed labels with a hanging indent.
+\newlist{pubs}{itemize}{1}
+\setlist[pubs]{leftmargin=2.9em, labelwidth=2.4em, labelsep=0.5em, align=left, itemsep=1ex, topsep=0pt, parsep=0pt}
+
+\begin{document}
+
+% ---------- header ----------
+\begin{center}
+{\LARGE\bfseries Jaeyoung Park}\\[1.2ex]
+Ph.D. Candidate, School of Electrical Engineering, KAIST\\[0.3ex]
+\href{mailto:jypark@kaist.ac.kr}{jypark@kaist.ac.kr} \quad\textbar\quad \href{https://jyparkkr.github.io/}{https://jyparkkr.github.io}
+\end{center}
+
+% ---------- research interests ----------
+\section{Research Interests}
+My research uses external memory, such as retrieved documents or a replay buffer of past examples, to improve model performance.
+I work on retrieval-augmented LLMs and continual learning, and I am now bringing these ideas to vision-language-action (VLA) models.
+
+% ---------- education ----------
+\section{Education}
+\textbf{Korea Advanced Institute of Science and Technology (KAIST)} \hfill Daejeon, Korea
+\begin{sublist}
+\item Ph.D. in Electrical Engineering \hfill Mar 2023 -- Feb 2028 (expected)\\
+Data Intelligence Lab, Advisor: Steven Euijong Whang
+\item M.S. in Electrical Engineering \hfill Mar 2021 -- Feb 2023\\
+Data Intelligence Lab, Advisor: Steven Euijong Whang
+\item B.S. in Electrical Engineering, Minor in Biological Science \hfill Mar 2017 -- Feb 2021\\
+Presidential Science Scholarship, Korea Student Aid Foundation
+\end{sublist}
+
+% ---------- publications ----------
+\section{Publications}
+
+\subsection{Under Review}
+\begin{pubs}
+\item[{[U1]}] \textbf{Jaeyoung Park}, Hantian Zhang, Kexin Rong, and Steven Euijong Whang, ``Topic-Level Fairness in Retrieval-Augmented Generation,'' under review, 2026.
+\end{pubs}
+
+\subsection{Conference Papers}
+\begin{pubs}
+\item[{[C3]}] \textbf{Jaeyoung Park}*, Minsu Kim*, and Steven Euijong Whang, ``\href{https://doi.org/10.1145/3770854.3780167}{Fair Class-Incremental Learning using Sample Weighting},'' in \textit{Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD)}, Jeju, Korea, Aug.~2026.
+\item[{[C2]}] Ki Hyun Tae, Hantian Zhang, \textbf{Jaeyoung Park}, Kexin Rong, and Steven Euijong Whang, ``\href{https://doi.org/10.14778/3641204.3641207}{Falcon: Fair Active Learning using Multi-armed Bandits},'' in \textit{Proceedings of the 50th International Conference on Very Large Data Bases (VLDB)}, Guangzhou, China, Aug.~2024.
+\item[{[C1]}] Hantian Zhang*, Ki Hyun Tae*, \textbf{Jaeyoung Park}, Xu Chu, and Steven Euijong Whang, ``\href{https://doi.org/10.1145/3588688}{iFlipper: Label Flipping for Individual Fairness},'' in \textit{Proceedings of the 2023 ACM SIGMOD International Conference on Management of Data (SIGMOD)}, Seattle, WA, USA, June~2023.
+\end{pubs}
+
+% ---------- teaching ----------
+\section{Teaching Experience}
+\textbf{Teaching Assistant}, School of Electrical Engineering, KAIST
+\begin{sublist}
+\item EE305 Introduction to Electronics Design Lab \hfill Fall 2025
+\item EE523 Convex Optimization Techniques \hfill Spring 2025
+\item EE412 Foundations of Big Data Analytics \hfill Fall 2023
+\item EE477 Database and Big Data Systems \hfill Spring 2023
+\end{sublist}
+
+% ---------- service ----------
+\section{Service}
+\textbf{Program Committee Member} \hfill 2025\\
+IEEE International Conference on Big Data and Smart Computing (BigComp)\\[0.8ex]
+\textbf{Volunteer} \hfill 2022\\
+ACM Conference on Fairness, Accountability, and Transparency (FAccT), Seoul, Korea
+
+\vfill
+{\footnotesize\hfill Last updated: October 2026\par}
+
+\end{document}
